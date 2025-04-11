@@ -117,11 +117,11 @@ document.addEventListener("DOMContentLoaded", function(){
     }
     function getDNAComplement(dnaSequence){
         let complementMap={ "A": "T", "T": "A", "C": "G", "G": "C" };
-        return [...dnaSequence].map(base=> complementMap[base]).join("");
+        return [...dnaSequence].map(base=>complementMap[base]).join("");
     }
     function getRNAComplement(rnaSequence){
         let complementMap={ "A": "U", "U": "A", "C": "G", "G": "C" };
-        return [...rnaSequence].map(base=> complementMap[base]).join("");
+        return [...rnaSequence].map(base=>complementMap[base]).join("");
     }
     function getRNATranscriptFromDNA(dnaSequence){
         return dnaSequence.replace(/T/g, "U");
@@ -153,6 +153,6 @@ document.addEventListener("DOMContentLoaded", function(){
             "C": "Cytosine",
             "G": "Guanine"
         };
-        return [...sequence].map(base=> baseNames[base]).join(", ");
+        return [...sequence].map(base=>baseNames[base]).join(", ");
     }
 });
