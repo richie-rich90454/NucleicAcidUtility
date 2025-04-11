@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Nucleic Acid Modeling</title>
+        <style>
+            @font-face{
+                font-family: "Noto Sans SC";
+                src: url("NotoSansSC-VariableFont_wght.ttf");
+            }
+            body{
+                font-family: "Noto Sans SC";
+                margin: 0;
+                padding: 1.25rem;
+                background-color: #F0F0F0;
+                color: #000;
+            }
+            #main{
+                font-family: "Noto Sans SC";
+                max-width: 50rem;
+                margin: 0 auto;
+                background-color: #FFF;
+                padding: 1.57rem;
+                border-radius: .625rem;
+                box-shadow: 0 .25rem .5rem rgba(0, 0, 0, 0.1);
+            }
+            h1{
+                font-family: "Noto Sans SC";
+                color: #3255A4;
+                font-size: 2rem;
+                margin: 0 0 1.25rem 0;
+                text-align: center;
+            }
+            .form-group{
+                font-family: "Noto Sans SC";
+                margin-bottom: 1.25rem;
+            }
+            label{
+                font-family: "Noto Sans SC";
+                display: block;
+                font-weight: bold;
+                margin-bottom: .5rem;
+                color: #000;
+            }
+            input[type="text"], select{
+                font-family: "Noto Sans SC";
+                width: 100%;
+                padding: .75rem;
+                font-size: 1rem;
+                border: .063rem solid #FFF;
+                border-radius: .223rem;
+                box-sizing: border-box;
+                transition: border-color 0.3s;
+            }
+            input[type="text"]:focus, select:focus{
+                font-family: "Noto Sans SC";
+                border-color: #1a73e8;
+                outline: none;
+            }
+            .checkbox-group{
+                font-family: "Noto Sans SC";
+                display: flex;
+                align-items: center;
+                gap: .77rem;
+            }
+            input[type="checkbox"]{
+                font-family: "Noto Sans SC";
+                width: auto;
+            }
+            #result, #error{
+                font-family: "Noto Sans SC";
+                margin-top: 1.25rem;
+                font-size: 1.1rem;
+                line-height: 1.5;
+            }
+            #result{
+                font-family: "Noto Sans SC";
+                color: #000;
+                word-break: break-all;
+            }
+            #error{
+                font-family: "Noto Sans SC";
+                color: #DE0000;
+            }
+            table{
+                font-family: "Noto Sans SC";
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: .625rem;
+            }
+            th, td{
+                font-family: "Noto Sans SC";
+                border: .063rem solid #000;
+                padding: .5rem;
+                text-align: center;
+            }
+            th{
+                font-family: "Noto Sans SC";
+                background-color: #F0F0F0;
+            }
+            @media (max-width: 600px){
+                body{
+                    padding: .625rem;
+                }
+                #main{
+                    padding: .938rem;
+                }
+                h1{
+                    font-size: 1.5rem;
+                }
+                input[type="text"], select{
+                    font-size: 0.9rem;
+                    padding: .625rem
+                }
+                label{
+                    font-size: 0.9rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <h1>Nucleic Acid Pairing & Protein Decoding</h1>
+            <div class="form-group">
+                <label for="sequence">Input Sequence:</label>
+                <input type="text" id="sequence" placeholder="e.g., ATGC (DNA) or AUGC (RNA)">
+            </div>
+            <div class="form-group">
+                <label for="conversionType">Conversion Type:</label>
+                <select id="conversionType">
+                    <option value="DNA_COMPLEMENT">DNA to Complement DNA</option>
+                    <option value="DNA_TRANSCRIPT">DNA (coding) to RNA Transcript</option>
+                    <option value="RNA_COMPLEMENT">RNA to Complement RNA</option>
+                    <option value="RNA_PROTEIN">RNA to Protein</option>
+                    <option value="DNA_PROTEIN">DNA (coding) to Protein</option>
+                </select>
+            </div>
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="showBaseNames" checked>
+                <label for="showBaseNames">Show Base Names</label>
+            </div>
+            <div id="result"></div>
+            <div id="error"></div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
