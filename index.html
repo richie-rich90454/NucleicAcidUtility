@@ -133,6 +133,33 @@
                     font-size: 0.9rem;
                 }
             }
+            .highlight-effect{
+                transition: all .3s ease;
+                box-shadow: 0 0 .625rem rgba(26, 113, 235, .5);
+            }
+            .result-fade{
+                display: none;
+            }
+            .error-shake{
+                animation: shake .5s;
+            }
+            @keyframes shake{
+                0%{
+                    transform: translateX(0);
+                }
+                25%{
+                    transform: translateX(-.625rem);
+                }
+                50%{
+                    transform: translateX(0);
+                }
+                75%{
+                    transform: translateX(.625rem);
+                }
+                100%{
+                    transform: translateX(0);
+                }
+            }
         </style>
     </head>
     <body>
