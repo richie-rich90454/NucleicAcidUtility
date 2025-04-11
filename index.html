@@ -12,25 +12,27 @@
             body{
                 font-family: "Noto Sans SC";
                 margin: 0;
-                padding: 1.25rem;
-                background-color: #F0F0F0;
+                padding: 0;
+                background-color: #E4E4E4;
                 color: #000;
             }
             #main{
                 font-family: "Noto Sans SC";
-                max-width: 50rem;
                 margin: 0 auto;
                 background-color: #FFF;
                 padding: 1.57rem;
                 border-radius: .625rem;
                 box-shadow: 0 .25rem .5rem rgba(0, 0, 0, 0.1);
+                max-width: 100%;
             }
             h1{
                 font-family: "Noto Sans SC";
-                color: #3255A4;
-                font-size: 2rem;
-                margin: 0 0 1.25rem 0;
+                color: #FFF;
+                background: linear-gradient(30deg, #DE0000, #1C94E9);
+                font-size: 4rem;
+                margin: 0;
                 text-align: center;
+                padding: 2rem;
             }
             .form-group{
                 font-family: "Noto Sans SC";
@@ -99,6 +101,13 @@
                 font-family: "Noto Sans SC";
                 background-color: #F0F0F0;
             }
+            #footer{
+                text-align: center;
+                background-color: #28465C;
+                color: #FFF;
+                padding: 1rem;
+                font-size: clamp(1rem, 1.5vw, 1.2rem);
+            }
             @media (max-width: 600px){
                 body{
                     padding: .625rem;
@@ -120,8 +129,8 @@
         </style>
     </head>
     <body>
+        <h1>Nucleic Acid Pairing & Protein Decoding</h1>
         <div id="main">
-            <h1>Nucleic Acid Pairing & Protein Decoding</h1>
             <div class="form-group">
                 <label for="sequence">Input Sequence:</label>
                 <input type="text" id="sequence" placeholder="e.g., ATGC (DNA) or AUGC (RNA)">
@@ -142,6 +151,9 @@
             </div>
             <div id="result"></div>
             <div id="error"></div>
+        </div>
+        <div id="footer">
+            <p>2025 Richard's Blogs</p>
         </div>
         <script src="script.js"></script>
     </body>
