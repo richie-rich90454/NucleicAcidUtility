@@ -7,7 +7,25 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "keywords": ["nucleic-acid", "dna", "rna", "protein-decoding", "bioinformatics", "sequence-conversion", "genetics", "molecular-biology", "codon-translation", "javascript", "frontend", "express", "nodejs", "webapp"],
+  "keywords": [
+    "nucleic-acid",
+    "dna",
+    "rna",
+    "protein-decoding",
+    "bioinformatics",
+    "sequence-conversion",
+    "genetics",
+    "molecular-biology",
+    "codon-translation",
+    "javascript",
+    "frontend",
+    "express",
+    "nodejs",
+    "webapp"
+  ],
   "author": "richie-rich90454",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
