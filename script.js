@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", function(){
         $(this).removeClass("highlight-effect");
     });
     $sequenceInput.on("input", convertSequence);
-    $conversionType.on("selectmenuchange", convertSequence);
-    $showBaseNames.on("change", convertSequence);
+    $conversionType.on("change", convertSequence);
+    $showBaseNames.on("click", convertSequence);
     function convertSequence(){
         $.when(
             $result.stop(true, false).fadeOut(200),
