@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function(){
-    let sequenceInput=document.getElementById("sequence");
-    let conversionTypeSelect=document.getElementById("conversionType");
-    let showBaseNamesCheckbox=document.getElementById("showBaseNames");
-    let resultDiv=document.getElementById("result");
-    let errorDiv=document.getElementById("error");
+    let $sequenceInput=$("#sequence");
+    let $conversionType=$("#conversionType");
+    let $showBaseNames=$("#showBaseNames");
+    let $result=$("#result");
+    let $error=$("#error");
     let codonTable={
         "UUU": "Phenylalanine", "UUC": "Phenylalanine", "UUA": "Leucine", "UUG": "Leucine",
         "CUU": "Leucine", "CUC": "Leucine", "CUA": "Leucine", "CUG": "Leucine",
@@ -22,106 +22,133 @@ document.addEventListener("DOMContentLoaded", function(){
         "AGU": "Serine", "AGC": "Serine", "AGA": "Arginine", "AGG": "Arginine",
         "GGU": "Glycine", "GGC": "Glycine", "GGA": "Glycine", "GGG": "Glycine"
     };
-    sequenceInput.addEventListener("input", convertSequence);
-    conversionTypeSelect.addEventListener("input", convertSequence);
-    showBaseNamesCheckbox.addEventListener("input", convertSequence);
+    $sequenceInput.tooltip({
+        content: "Enter DNA or RNA sequence",
+        position:{ my: "left+10 center", at: "right center" }
+    });
+    $sequenceInput.on("focus", function(){
+        $(this).addClass("highlight-effect");
+    }).on("blur", function(){
+        $(this).removeClass("highlight-effect");
+    });
+    $sequenceInput.on("input", convertSequence);
+    $conversionType.on("selectmenuchange", convertSequence);
+    $showBaseNames.on("change", convertSequence);
     function convertSequence(){
-        let sequence=sequenceInput.value.trim().toUpperCase();
-        let conversionType=conversionTypeSelect.value;
-        errorDiv.textContent="";
-        resultDiv.innerHTML="";
-        if (!sequence){
-            errorDiv.textContent="Please enter a sequence.";
-            return;
-        }
-        let regex;
-        if (conversionType=="DNA_COMPLEMENT"||conversionType=="DNA_TRANSCRIPT"||conversionType=="DNA_PROTEIN"){
-            regex=/^[ATCG]+$/;
-            if (!regex.test(sequence)){
-                errorDiv.textContent="Invalid DNA sequence. Use only A, T, C, G.";
+        $.when(
+            $result.stop(true, false).fadeOut(200),
+            $error.stop(true, false).fadeOut(200)
+        ).then(function(){
+            $error.text("");
+            $result.html("");
+            let sequence=$sequenceInput.val().trim().toUpperCase();
+            let conversionType=$conversionType.val();
+            if (!sequence){
+                $error.text("Please enter a sequence.");
+                $error.fadeIn(200);
                 return;
             }
-        }
-        else if (conversionType=="RNA_COMPLEMENT"||conversionType=="RNA_PROTEIN"){
-            regex=/^[AUCG]+$/;
-            if (!regex.test(sequence)){
-                errorDiv.textContent="Invalid RNA sequence. Use only A, U, C, G.";
-                return;
-            }
-        }
-        if (conversionType=="DNA_COMPLEMENT"){
-            let outputSequence=getDNAComplement(sequence);
-            resultDiv.textContent=`Complement DNA: ${outputSequence}`;
-            if (showBaseNamesCheckbox.checked){
-                resultDiv.innerHTML+=`<br><strong>Input Bases:</strong> ${getBaseNames(sequence)}`;
-                resultDiv.innerHTML+=`<br><strong>Output Bases:</strong> ${getBaseNames(outputSequence)}`;
-            }
-        }
-        else if (conversionType=="DNA_TRANSCRIPT"){
-            let rnaTranscript=getRNATranscriptFromDNA(sequence);
-            resultDiv.textContent=`RNA Transcript: ${rnaTranscript}`;
-            if (showBaseNamesCheckbox.checked){
-                resultDiv.innerHTML+=`<br><strong>Input Bases:</strong> ${getBaseNames(sequence)}`;
-                resultDiv.innerHTML+=`<br><strong>Output Bases:</strong> ${getBaseNames(rnaTranscript)}`;
-            }
-        }
-        else if (conversionType=="RNA_COMPLEMENT"){
-            let outputSequence=getRNAComplement(sequence);
-            resultDiv.textContent=`Complement RNA: ${outputSequence}`;
-            if (showBaseNamesCheckbox.checked){
-                resultDiv.innerHTML+=`<br><strong>Input Bases:</strong> ${getBaseNames(sequence)}`;
-                resultDiv.innerHTML+=`<br><strong>Output Bases:</strong> ${getBaseNames(outputSequence)}`;
-            }
-        }
-        else if (conversionType=="RNA_PROTEIN"){
-            let { codons, incomplete }=decodeRNAtoProtein(sequence);
-            if (codons.length>0){
-                let table="<table><tr><th>Codon</th><th>tRNA Anticodon</th><th>Amino Acid</th></tr>";
-                codons.forEach(({ codon, anticodon, aminoAcid })=>{
-                    table+=`<tr><td>${codon}</td><td>${anticodon}</td><td>${aminoAcid}</td></tr>`;
-                });
-                table+="</table>";
-                resultDiv.innerHTML=table;
-                if (incomplete){
-                    resultDiv.innerHTML+=`<p>Incomplete codon: ${incomplete}</p>`;
-                }
-                if (showBaseNamesCheckbox.checked){
-                    resultDiv.innerHTML+=`<br><strong>Input Bases:</strong> ${getBaseNames(sequence)}`;
+            let regex;
+            if (conversionType=="DNA_COMPLEMENT"||conversionType=="DNA_TRANSCRIPT"||conversionType=="DNA_PROTEIN"){
+                regex=/^[ATCG]+$/;
+                if (!regex.test(sequence)){
+                    $error.text("Invalid DNA sequence. Use only A, T, C, G.");
+                    $error.fadeIn(200);
+                    return;
                 }
             }
-            else{
-                errorDiv.textContent="No complete codons found.";
-            }
-        }
-        else if (conversionType=="DNA_PROTEIN"){
-            let rnaTranscript=getRNATranscriptFromDNA(sequence);
-            let{ codons, incomplete }=decodeRNAtoProtein(rnaTranscript);
-            if (codons.length>0){
-                let table="<table><tr><th>Codon</th><th>tRNA Anticodon</th><th>Amino Acid</th></tr>";
-                codons.forEach(({ codon, anticodon, aminoAcid })=>{
-                    table+=`<tr><td>${codon}</td><td>${anticodon}</td><td>${aminoAcid}</td></tr>`;
-                });
-                table+="</table>";
-                resultDiv.innerHTML=table;
-                if (incomplete){
-                    resultDiv.innerHTML+=`<p>Incomplete codon: ${incomplete}</p>`;
-                }
-                if (showBaseNamesCheckbox.checked){
-                    resultDiv.innerHTML+=`<br><strong>Input Bases:</strong> ${getBaseNames(sequence)}`;
+            else if (conversionType=="RNA_COMPLEMENT"||conversionType=="RNA_PROTEIN"){
+                regex=/^[AUCG]+$/;
+                if (!regex.test(sequence)){
+                    $error.text("Invalid RNA sequence. Use only A, U, C, G.");
+                    $error.fadeIn(200);
+                    return;
                 }
             }
-            else{
-                errorDiv.textContent="No complete codons found.";
+            if (conversionType=="DNA_COMPLEMENT"){
+                let outputSequence=getDNAComplement(sequence);
+                let html=`<p>Complement DNA: ${outputSequence}</p>`;
+                if ($showBaseNames.is(":checked")){
+                    html+=`<p><strong>Input Bases:</strong> ${getBaseNames(sequence)}</p>`;
+                    html+=`<p><strong>Output Bases:</strong> ${getBaseNames(outputSequence)}</p>`;
+                }
+                $result.html(html);
+                $result.fadeIn(200);
             }
-        }
+            else if (conversionType=="DNA_TRANSCRIPT"){
+                let rnaTranscript=getRNATranscriptFromDNA(sequence);
+                let html=`<p>RNA Transcript: ${rnaTranscript}</p>`;
+                if ($showBaseNames.is(":checked")){
+                    html+=`<p><strong>Input Bases:</strong> ${getBaseNames(sequence)}</p>`;
+                    html+=`<p><strong>Output Bases:</strong> ${getBaseNames(rnaTranscript)}</p>`;
+                }
+                $result.html(html);
+                $result.fadeIn(200);
+            }
+            else if (conversionType=="RNA_COMPLEMENT"){
+                let outputSequence=getRNAComplement(sequence);
+                let html=`<p>Complement RNA: ${outputSequence}</p>`;
+                if ($showBaseNames.is(":checked")){
+                    html+=`<p><strong>Input Bases:</strong> ${getBaseNames(sequence)}</p>`;
+                    html+=`<p><strong>Output Bases:</strong> ${getBaseNames(outputSequence)}</p>`;
+                }
+                $result.html(html);
+                $result.fadeIn(200);
+            }
+            else if (conversionType=="RNA_PROTEIN"){
+                let{ codons, incomplete }=decodeRNAtoProtein(sequence);
+                if (codons.length > 0){
+                    let html="<table><tr><th>Codon</th><th>tRNA Anticodon</th><th>Amino Acid</th></tr>";
+                    codons.forEach(({ codon, anticodon, aminoAcid })=>{
+                        html+=`<tr><td>${codon}</td><td>${anticodon}</td><td>${aminoAcid}</td></tr>`;
+                    });
+                    html+="</table>";
+                    if (incomplete){
+                        html+=`<p>Incomplete codon: ${incomplete}</p>`;
+                    }
+                    if ($showBaseNames.is(":checked")){
+                        html+=`<p><strong>Input Bases:</strong> ${getBaseNames(sequence)}</p>`;
+                    }
+                    $result.html(html);
+                    $result.fadeIn(200);
+                }
+                else{
+                    $error.text("No complete codons found.");
+                    $error.fadeIn(200);
+                }
+            }
+            else if (conversionType=="DNA_PROTEIN"){
+                let rnaTranscript=getRNATranscriptFromDNA(sequence);
+                let{ codons, incomplete }=decodeRNAtoProtein(rnaTranscript);
+                if (codons.length > 0){
+                    let html="<table><tr><th>Codon</th><th>tRNA Anticodon</th><th>Amino Acid</th></tr>";
+                    codons.forEach(({ codon, anticodon, aminoAcid })=>{
+                        html+=`<tr><td>${codon}</td><td>${anticodon}</td><td>${aminoAcid}</td></tr>`;
+                    });
+                    html+="</table>";
+                    if (incomplete){
+                        html+=`<p>Incomplete codon: ${incomplete}</p>`;
+                    }
+                    if ($showBaseNames.is(":checked")){
+                        html+=`<p><strong>Input Bases:</strong> ${getBaseNames(sequence)}</p>`;
+                    }
+                    $result.html(html);
+                    $result.fadeIn(200);
+                }
+                else{
+                    $error.text("No complete codons found.");
+                    $error.fadeIn(200);
+                }
+            }
+        });
     }
     function getDNAComplement(dnaSequence){
         let complementMap={ "A": "T", "T": "A", "C": "G", "G": "C" };
-        return [...dnaSequence].map(base=>complementMap[base]).join("");
+        return [...dnaSequence].map(base=> complementMap[base]).join("");
     }
     function getRNAComplement(rnaSequence){
         let complementMap={ "A": "U", "U": "A", "C": "G", "G": "C" };
-        return [...rnaSequence].map(base=>complementMap[base]).join("");
+        return [...rnaSequence].map(base=> complementMap[base]).join("");
     }
     function getRNATranscriptFromDNA(dnaSequence){
         return dnaSequence.replace(/T/g, "U");
@@ -153,6 +180,6 @@ document.addEventListener("DOMContentLoaded", function(){
             "C": "Cytosine",
             "G": "Guanine"
         };
-        return [...sequence].map(base=>baseNames[base]).join(", ");
+        return [...sequence].map(base=> baseNames[base]).join(", ");
     }
 });
