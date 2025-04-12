@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function(){
             let outputSequence=getOutputSequence(sequence, conversionType);
             let html=`<p>${getLabel(conversionType)}: <span class="sequence-container"></span></p>`;
             $result.html(html);
-            let $sequenceContainer=$result.find('.sequence-container');
+            let $sequenceContainer=$result.find(".sequence-container");
             for (let i=0; i<outputSequence.length; i++){
                 let $span=$(`<span data-index="${i}">${outputSequence[i]}</span>`);
                 $sequenceContainer.append($span);
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 $result.append(`<p class="output-bases"><strong>Output Bases:</strong> ${getBaseNames(outputSequence)}</p>`);
             }
             else{
-                $result.find('.input-bases, .output-bases').remove();
+                $result.find(".input-bases, .output-bases").remove();
             }
         }
         else{
@@ -114,14 +114,14 @@ document.addEventListener("DOMContentLoaded", function(){
     }
     function differentialUpdate(sequence, conversionType, showBaseNames){
         let outputSequence=getOutputSequence(sequence, conversionType);
-        let $sequenceContainer=$result.find('.sequence-container');
+        let $sequenceContainer=$result.find(".sequence-container");
 
         if ($sequenceContainer.length==0){
             fullUpdate(sequence, conversionType, showBaseNames);
             return;
         }
 
-        let $currentSpans=$sequenceContainer.children('span');
+        let $currentSpans=$sequenceContainer.children("span");
         let maxIndex=Math.max(previousSequence.length, sequence.length);
 
         for (let i=0; i<maxIndex; i++){
@@ -158,8 +158,8 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         }
         if (showBaseNames){
-            let $inputBases=$result.find('.input-bases');
-            let $outputBases=$result.find('.output-bases');
+            let $inputBases=$result.find(".input-bases");
+            let $outputBases=$result.find(".output-bases");
             if ($inputBases.length){
                 $inputBases.html(`<strong>Input Bases:</strong> ${getBaseNames(sequence)}`);
             }
@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         }
         else{
-            $result.find('.input-bases, .output-bases').remove();
+            $result.find(".input-bases, .output-bases").remove();
         }
     }
     function getOutputSequence(sequence, conversionType){
