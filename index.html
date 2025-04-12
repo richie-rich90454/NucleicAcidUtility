@@ -1,9 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <meta name="description" content="Explore DNA and RNA sequences, convert between nucleic acids, and decode RNA into proteins using this interactive genetic code tool.">
+        <meta name="keywords" content="DNA, RNA, genetic code, codon table, protein translation, nucleotide pairing, biology tool">
+        <meta name="author" content="Richard's Blogs">
+        <meta property="og:title" content="Nucleic Acids">
+        <meta property="og:description" content="Interactive tool for DNA/RNA conversion and protein translation using codon table.">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="https://dna.richardsblogs.com/favicon.ico">
+        <meta property="og:url" content="https://dna.richardsblogs.com">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Nucleic Acid Converter & Protein Decoder">
+        <meta name="twitter:description" content="Convert DNA/RNA and translate RNA to proteins. Learn genetic coding interactively.">
+        <meta name="twitter:image" content="https://dna.richardsblogs.com/favicon.ico">
+        <link rel="canonical" href="https://dna.richardsblogs.com">
+        <link rel="icon" type="image/x-icon" href="favicon.ico" aria-label="Nucleic Acid Favicon">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>window.jQuery||document.write('<script src="jquery-3.7.1.js"><\/script>')</script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.min.css" integrity="sha512-TFee0335YRJoyiqz8hA8KV3P0tXa5CpRBSoM0Wnkn7JoJx1kaq1yXL/rb8YFpWXkMOjRcv5txv+C6UluttluCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.onerror=null;this.href='jquery-ui.min.css';"/>
@@ -168,7 +181,7 @@
     </head>
     <body>
         <h1>Nucleic Acid Pairing and Protein Decoding</h1>
-        <div id="main">
+        <main id="main">
             <div class="form-group">
                 <label for="sequence">Input Sequence:</label>
                 <input type="text" id="sequence" placeholder="e.g., ATGC (DNA) or AUGC (RNA)">
@@ -189,10 +202,10 @@
             </div>
             <div id="result"></div>
             <div id="error"></div>
-        </div>
-        <div id="footer">
+        </main>
+        <footer id="footer">
             <p>2025 Richard's Blogs</p>
-        </div>
+        </footer>
         <script src="script.js"></script>
     </body>
 </html>
