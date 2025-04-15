@@ -7,7 +7,9 @@ document.addEventListener("DOMContentLoaded", function(){
     let previousSequence="";
     let previousConversionType="";
     let previousShowBaseNames=false;
-    const sequenceOutputTypes=["DNA_COMPLEMENT", "RNA_COMPLEMENT", "DNA_TRANSCRIPT"];
+    let dnaBases=["A", "T", "G", "C"];
+    let rnaBases=["A", "U", "G", "C"];
+    let sequenceOutputTypes=["DNA_COMPLEMENT", "RNA_COMPLEMENT", "DNA_TRANSCRIPT"];
     let codonTable={
         "UUU": "Phenylalanine", "UUC": "Phenylalanine", "UUA": "Leucine", "UUG": "Leucine",
         "CUU": "Leucine", "CUC": "Leucine", "CUA": "Leucine", "CUG": "Leucine",
@@ -143,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function(){
                     }
                     else{
                         let $prevSpan=$sequenceContainer.find(`span[data-index="${i-1}"]`);
-                        $prevSpan.length ? $prevSpan.after($newSpan) : $sequenceContainer.append($newSpan);
+                        $prevSpan.length?$prevSpan.after($newSpan):$sequenceContainer.append($newSpan);
                     }
                     $newSpan.hide().fadeIn(200);
                 }
@@ -184,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function(){
         return "";
     }
     function getLabel(conversionType){
-        const labels={
+        let labels={
             "DNA_COMPLEMENT": "Complement DNA",
             "RNA_COMPLEMENT": "Complement RNA",
             "DNA_TRANSCRIPT": "RNA Transcript"
@@ -227,4 +229,20 @@ document.addEventListener("DOMContentLoaded", function(){
         };
         return [...sequence].map(base=>baseNames[base]).join(", ");
     }
+    function updateBaseButtons() {
+        let conversionType=$conversionType.val();
+        let bases=(["DNA_COMPLEMENT", "DNA_TRANSCRIPT", "DNA_PROTEIN"].includes(conversionType))?dnaBases:rnaBases;
+        $("#base-buttons").empty();
+        bases.forEach(base=>{
+            let $button=$("<button>").text(base).addClass("base-button");
+            $button.on("click", function() {
+                let currentSequence=$sequenceInput.val();
+                $sequenceInput.val(currentSequence + base);
+                convertSequence();
+            });
+            $("#base-buttons").append($button);
+        });
+    }
+    updateBaseButtons();
+    $conversionType.on("change", updateBaseButtons);
 });
