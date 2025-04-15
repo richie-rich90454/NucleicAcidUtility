@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function(){
             previousSequence=sequence;
             previousConversionType=conversionType;
             previousShowBaseNames=showBaseNames;
+            updateButtonStates();
         });
     }
     function fullUpdate(sequence, conversionType, showBaseNames){
@@ -117,15 +118,11 @@ document.addEventListener("DOMContentLoaded", function(){
     function differentialUpdate(sequence, conversionType, showBaseNames){
         let outputSequence=getOutputSequence(sequence, conversionType);
         let $sequenceContainer=$result.find(".sequence-container");
-
         if ($sequenceContainer.length==0){
             fullUpdate(sequence, conversionType, showBaseNames);
             return;
         }
-
-        let $currentSpans=$sequenceContainer.children("span");
         let maxIndex=Math.max(previousSequence.length, sequence.length);
-
         for (let i=0; i<maxIndex; i++){
             if (i<sequence.length){
                 let base=outputSequence[i];
@@ -243,6 +240,22 @@ document.addEventListener("DOMContentLoaded", function(){
             $("#base-buttons").append($button);
         });
     }
+    function updateButtonStates(){
+        let sequence=$sequenceInput.val();
+        let disabled=(sequence.length==0);
+        $("#delete-last").prop("disabled", disabled);
+        $("#clear-all").prop("disabled", disabled);
+    }
     updateBaseButtons();
     $conversionType.on("change", updateBaseButtons);
+    $("#delete-last").on("click", function(){
+        let currentSequence=$sequenceInput.val();
+        $sequenceInput.val(currentSequence.slice(0, -1));
+        convertSequence();
+    });
+    $("#clear-all").on("click", function(){
+        $sequenceInput.val("");
+        convertSequence();
+    });
+    updateButtonStates();
 });

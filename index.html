@@ -154,8 +154,8 @@
                     font-size: 0.9rem;
                 }
                 .base-button{
-                    padding: 1.4rem 2.2rem;
-                    font-size: 1.5rem;
+                    padding: 1.1rem 1.8rem;
+                    font-size: 1.3rem;
                 }
             }
             .highlight-effect{
@@ -194,14 +194,14 @@
             }
             #base-buttons{
                 display: flex;
-                justify-content: left;
+                justify-content: flex-start;
                 flex-wrap: wrap;
                 margin-top: .8rem;
             }
             .base-button{
-                padding: .8rem 1.6rem;
+                padding: .4rem 1.2rem;
                 margin: .4rem;
-                font-size: 1.2rem;
+                font-size: 1.1rem;
                 background-color: #F0F0F0;
                 border: .05rem solid #CCC;
                 cursor: pointer;
@@ -210,6 +210,11 @@
             }
             .base-button:hover{
                 transform: scale(1.1);
+            }
+            #sequence-controls{
+                display: flex;
+                justify-content: flex-start;
+                margin-top: .8rem;
             }
         </style>
     </head>
@@ -220,6 +225,10 @@
                 <label for="sequence">Input Sequence:</label>
                 <input type="text" id="sequence" placeholder="e.g., ATGC (DNA) or AUGC (RNA)">
                 <div id="base-buttons"></div>
+                <div id="sequence-controls">
+                    <button id="delete-last" class="base-button" disabled>Delete</button>
+                    <button id="clear-all" class="base-button" disabled>Clear All</button>
+                </div>
             </div>
             <div class="form-group">
                 <label for="conversionType">Conversion Type:</label>
