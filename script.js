@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function (){
     let $sequenceInput=$("#sequence");
     let $conversionType=$("#conversionType");
     let $showBaseNames=$("#showBaseNames");
@@ -32,18 +32,16 @@ document.addEventListener("DOMContentLoaded", function(){
         content: "Enter DNA or RNA sequence",
         position:{ my: "left+10 center", at: "right center" }
     });
-    $sequenceInput.on("focus", function(){
+    $sequenceInput.on("focus", function (){
         $(this).addClass("highlight-effect");
-    }).on("blur", function(){
+    }).on("blur", function (){
         $(this).removeClass("highlight-effect");
     });
     $sequenceInput.on("input", convertSequence);
     $conversionType.on("change", convertSequence);
     $showBaseNames.on("click", convertSequence);
     function convertSequence(){
-        $.when(
-            $error.stop(true, false).fadeOut(200)
-        ).then(function(){
+        $.when($error.stop(true, false).fadeOut(200)).then(function (){
             $error.text("");
             let sequence=$sequenceInput.val().trim().toUpperCase();
             let conversionType=$conversionType.val();
@@ -83,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         }
         else{
-            $result.fadeOut(200, function(){
+            $result.fadeOut(200, function (){
                 let html="";
                 let codons, incomplete;
                 if (conversionType=="RNA_PROTEIN"){
@@ -91,11 +89,11 @@ document.addEventListener("DOMContentLoaded", function(){
                 }
                 else{
                     let rnaTranscript=getRNATranscriptFromDNA(sequence);
-                    ({codons, incomplete}=decodeRNAtoProtein(rnaTranscript));
+                    ({ codons, incomplete }=decodeRNAtoProtein(rnaTranscript, sequence));
                 }
-                if (codons.length>0){
+                if (codons.length > 0){
                     html="<table><tr><th>Codon</th><th>tRNA Anticodon</th><th>Amino Acid</th></tr>";
-                    codons.forEach(({ codon, anticodon, aminoAcid })=>{
+                    codons.forEach(({ codon, anticodon, aminoAcid }) =>{
                         html+=`<tr><td>${codon}</td><td>${anticodon}</td><td>${aminoAcid}</td></tr>`;
                     });
                     html+="</table>";
@@ -129,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 let $span=$sequenceContainer.find(`span[data-index="${i}"]`);
                 if ($span.length){
                     if ($span.text()!==base){
-                        $span.fadeOut(100, function(){
+                        $span.fadeOut(100, function (){
                             $span.text(base);
                             $span.fadeIn(100);
                         });
@@ -141,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function(){
                         $sequenceContainer.prepend($newSpan);
                     }
                     else{
-                        let $prevSpan=$sequenceContainer.find(`span[data-index="${i-1}"]`);
+                        let $prevSpan=$sequenceContainer.find(`span[data-index="${i - 1}"]`);
                         $prevSpan.length?$prevSpan.after($newSpan):$sequenceContainer.append($newSpan);
                     }
                     $newSpan.hide().fadeIn(200);
@@ -150,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function(){
             else{
                 let $span=$sequenceContainer.find(`span[data-index="${i}"]`);
                 if ($span.length){
-                    $span.fadeOut(200, function(){
+                    $span.fadeOut(200, function (){
                         $span.remove();
                     });
                 }
@@ -191,26 +189,27 @@ document.addEventListener("DOMContentLoaded", function(){
         return labels[conversionType]||"";
     }
     function getDNAComplement(dnaSequence){
-        let complementMap={ "A": "T", "T": "A", "C": "G", "G": "C" };
-        return [...dnaSequence].map(base=>complementMap[base]).join("");
+        let complementMap={ A: "T", T: "A", C: "G", G: "C" };
+        return [...dnaSequence].map(base => complementMap[base]).join("");
     }
     function getRNAComplement(rnaSequence){
-        let complementMap={ "A": "U", "U": "A", "C": "G", "G": "C" };
-        return [...rnaSequence].map(base=>complementMap[base]).join("");
+        let complementMap={ A: "U", U: "A", C: "G", G: "C" };
+        return [...rnaSequence].map(base => complementMap[base]).join("");
     }
     function getRNATranscriptFromDNA(dnaSequence){
+        let complementMap={ A: "U", T: "A", C: "G", G: "C" };
+        return [...dnaSequence].map(base => complementMap[base]).join("");
+    }
+    function getTRNAFromDNA(dnaSequence){
         return dnaSequence.replace(/T/g, "U");
     }
-    function getRNAReverseComplement(rnaSequence){
-        let complement=getRNAComplement(rnaSequence);
-        return complement.split("").reverse().join("");
-    }
-    function decodeRNAtoProtein(rnaSequence){
+    function decodeRNAtoProtein(rnaSequence, originalDNA=""){
         let codons=[];
         for (let i=0; i<rnaSequence.length; i+=3){
-            let codon=rnaSequence.slice(i, i+3);
+            let codon=rnaSequence.slice(i, i + 3);
             if (codon.length==3){
-                let anticodon=getRNAReverseComplement(codon);
+                let correspondingDNA=originalDNA.slice(i, i + 3);
+                let anticodon=getTRNAFromDNA(correspondingDNA);
                 let aminoAcid=codonTable[codon]||"Unknown";
                 codons.push({ codon, anticodon, aminoAcid });
             }
@@ -221,18 +220,16 @@ document.addEventListener("DOMContentLoaded", function(){
         return{ codons, incomplete: null };
     }
     function getBaseNames(sequence){
-        let baseNames={
-            "A": "Adenine", "T": "Thymine", "U": "Uracil", "C": "Cytosine", "G": "Guanine"
-        };
-        return [...sequence].map(base=>baseNames[base]).join(", ");
+        let baseNames={ A: "Adenine", T: "Thymine", U: "Uracil", C: "Cytosine", G: "Guanine" };
+        return [...sequence].map(base => baseNames[base]).join(", ");
     }
-    function updateBaseButtons() {
+    function updateBaseButtons(){
         let conversionType=$conversionType.val();
         let bases=(["DNA_COMPLEMENT", "DNA_TRANSCRIPT", "DNA_PROTEIN"].includes(conversionType))?dnaBases:rnaBases;
         $("#base-buttons").empty();
-        bases.forEach(base=>{
+        bases.forEach(base =>{
             let $button=$("<button>").text(base).addClass("base-button");
-            $button.on("click", function() {
+            $button.on("click", function (){
                 let currentSequence=$sequenceInput.val();
                 $sequenceInput.val(currentSequence + base);
                 convertSequence();
@@ -248,12 +245,12 @@ document.addEventListener("DOMContentLoaded", function(){
     }
     updateBaseButtons();
     $conversionType.on("change", updateBaseButtons);
-    $("#delete-last").on("click", function(){
+    $("#delete-last").on("click", function (){
         let currentSequence=$sequenceInput.val();
         $sequenceInput.val(currentSequence.slice(0, -1));
         convertSequence();
     });
-    $("#clear-all").on("click", function(){
+    $("#clear-all").on("click", function (){
         $sequenceInput.val("");
         convertSequence();
     });
