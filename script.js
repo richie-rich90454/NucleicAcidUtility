@@ -89,9 +89,9 @@ document.addEventListener("DOMContentLoaded", function (){
                 }
                 else{
                     let rnaTranscript=getRNATranscriptFromDNA(sequence);
-                    ({ codons, incomplete }=decodeRNAtoProtein(rnaTranscript, sequence));
+                    ({ codons, incomplete }=decodeRNAtoProtein(rnaTranscript));
                 }
-                if (codons.length > 0){
+                if (codons.length>0){
                     html="<table><tr><th>Codon</th><th>tRNA Anticodon</th><th>Amino Acid</th></tr>";
                     codons.forEach(({ codon, anticodon, aminoAcid }) =>{
                         html+=`<tr><td>${codon}</td><td>${anticodon}</td><td>${aminoAcid}</td></tr>`;
@@ -190,38 +190,38 @@ document.addEventListener("DOMContentLoaded", function (){
     }
     function getDNAComplement(dnaSequence){
         let complementMap={ A: "T", T: "A", C: "G", G: "C" };
-        return [...dnaSequence].map(base => complementMap[base]).join("");
+        return [...dnaSequence].map(base=>complementMap[base]).join("");
     }
     function getRNAComplement(rnaSequence){
         let complementMap={ A: "U", U: "A", C: "G", G: "C" };
-        return [...rnaSequence].map(base => complementMap[base]).join("");
+        return [...rnaSequence].map(base=>complementMap[base]).join("");
     }
     function getRNATranscriptFromDNA(dnaSequence){
         let complementMap={ A: "U", T: "A", C: "G", G: "C" };
-        return [...dnaSequence].map(base => complementMap[base]).join("");
+        return [...dnaSequence].map(base=>complementMap[base]).join("");
     }
-    function getTRNAFromDNA(dnaSequence){
-        return dnaSequence.replace(/T/g, "U");
+    function getAnticodon(codon) {
+        let complementMap={ "A": "U", "U": "A", "G": "C", "C": "G" };
+        return [...codon].map(base=>complementMap[base]).reverse().join("");
     }
-    function decodeRNAtoProtein(rnaSequence, originalDNA=""){
+    function decodeRNAtoProtein(rnaSequence) {
         let codons=[];
-        for (let i=0; i<rnaSequence.length; i+=3){
-            let codon=rnaSequence.slice(i, i + 3);
-            if (codon.length==3){
-                let correspondingDNA=originalDNA.slice(i, i + 3);
-                let anticodon=getTRNAFromDNA(correspondingDNA);
+        for (let i=0; i < rnaSequence.length; i+=3) {
+            let codon=rnaSequence.slice(i, i+3);
+            if (codon.length==3) {
+                let anticodon=getAnticodon(codon);
                 let aminoAcid=codonTable[codon]||"Unknown";
                 codons.push({ codon, anticodon, aminoAcid });
             }
-            else{
-                return{ codons, incomplete: codon };
+            else {
+                return { codons, incomplete: codon };
             }
         }
-        return{ codons, incomplete: null };
+        return { codons, incomplete: null };
     }
     function getBaseNames(sequence){
         let baseNames={ A: "Adenine", T: "Thymine", U: "Uracil", C: "Cytosine", G: "Guanine" };
-        return [...sequence].map(base => baseNames[base]).join(", ");
+        return [...sequence].map(base=>baseNames[base]).join(", ");
     }
     function updateBaseButtons(){
         let conversionType=$conversionType.val();
@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function (){
             let $button=$("<button>").text(base).addClass("base-button");
             $button.on("click", function (){
                 let currentSequence=$sequenceInput.val();
-                $sequenceInput.val(currentSequence + base);
+                $sequenceInput.val(currentSequence+base);
                 convertSequence();
             });
             $("#base-buttons").append($button);
