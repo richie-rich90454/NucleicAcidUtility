@@ -1,11 +1,5 @@
 # Nucleic Acid Pairing
 > An interactive web application for exploring DNA and RNA sequences: convert between nucleic acids, compute complements and transcripts, and translate RNA (or coding‑strand DNA) into proteins.
-# Examples
-![DNA to DNA Conversion](demos/DNA_to_DNA.png)
-![DNA to RNA Conversion](demos/DNA_to_RNA.png)
-![RNA to RNA Conversion](demos/RNA_to_RNA.png)
-![RNA to Protein Conversion](demos/RNA_to_Protein.png)
-![DNA to Protein Conversion](demos/DNA_to_Protein.png)
 ## Table of Contents
 * [Features](#features)
 * [Demo](#demo)
@@ -35,9 +29,15 @@
   * Fastify static server with no-cache headers
 ---
 ## Demo
-View the live demo at:
-[https://dna.richardsblogs.com](https://dna.richardsblogs.com)
-*Or* after installation (below), open your browser to `http://localhost:6001`
+- View the live demo at:
+- [https://dna.richardsblogs.com](https://dna.richardsblogs.com)
+- *Or* after installation (below), open your browser to `http://localhost:6001`
+- Examples
+    - ![DNA to DNA Conversion](demos/DNA_to_DNA.png)
+    - ![DNA to RNA Conversion](demos/DNA_to_RNA.png)
+    - ![RNA to RNA Conversion](demos/RNA_to_RNA.png)
+    - ![RNA to Protein Conversion](demos/RNA_to_Protein.png)
+    - ![DNA to Protein Conversion](demos/DNA_to_Protein.png)
 ---
 ## Prerequisites
 * [Node.js](https://nodejs.org/) ≥ v14
@@ -47,7 +47,7 @@ View the live demo at:
 ## Installation & Usage
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your‑username/nucleic‑acid‑pairing.git
+   git clone https://github.com/richie-rich90454/nucleic-acid-pairing.git
    cd nucleic‑acid‑pairing
    ```
 2. **Install dependencies**
@@ -86,5 +86,5 @@ NUCLEIC‑ACID‑PAIRING/
 * **Server Settings**: Modify `server.js` for custom ports, caching policies, or additional routes.
 ---
 ## License
-This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
+- This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
 ---
