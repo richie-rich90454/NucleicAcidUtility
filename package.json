@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "app": "concurrently \"npm run start\" \"wait-on http://localhost:6001 && electron .\""
+    "app": "concurrently \"npm run start\" \"wait-on http://localhost:6001 && electron .\"",
+    "build": "electron-builder"
   },
   "keywords": [
     "nucleic-acid",
@@ -34,6 +35,30 @@
   "devDependencies": {
     "concurrently": "^9.1.2",
     "electron": "^36.4.0",
+    "electron-builder": "^26.0.12",
     "wait-on": "^8.0.3"
+  },
+  "build": {
+    "appId": "com.richierich.nucleicacid",
+    "productName": "Nucleic Acid Pairing",
+    "files": [
+      "**/*",
+      "!node_modules/.cache"
+    ],
+    "win": {
+      "icon": "favicon.ico",
+      "target": "nsis"
+    },
+    "mac": {
+      "icon": "favicon.icns",
+      "target": "dmg"
+    },
+    "linux": {
+      "icon": "favicon.png",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
   }
 }
