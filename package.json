@@ -45,9 +45,13 @@
       "**/*",
       "!node_modules/.cache"
     ],
+    "asar": true,
     "win": {
       "icon": "favicon.ico",
-      "target": "nsis"
+      "target": [
+        "portable",
+        "nsis"
+      ]
     },
     "mac": {
       "icon": "favicon.icns",
