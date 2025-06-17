@@ -1,23 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <title>Nucleic Acids</title>
+<html lang="en">
+    <title>Nucleic Acid Converter</title>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Explore DNA and RNA sequences, convert between nucleic acids, and decode RNA into proteins using this interactive genetic code tool.">
-        <meta name="keywords" content="DNA, RNA, genetic code, codon table, protein translation, nucleotide pairing, biology tool">
+        <meta name="description" content="Interactive DNA/RNA conversion tool with codon visualization and protein translation">
+        <meta name="keywords" content="DNA, RNA, genetic code, codon table, protein translation">
         <meta name="author" content="Richard's Blogs">
-        <meta property="og:title" content="Nucleic Acids">
-        <meta property="og:description" content="Interactive tool for DNA/RNA conversion and protein translation using codon table.">
-        <meta property="og:type" content="website">
-        <meta property="og:image" content="https://dna.richardsblogs.com/favicon.ico">
-        <meta property="og:url" content="https://dna.richardsblogs.com">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Nucleic Acid Converter & Protein Decoder">
-        <meta name="twitter:description" content="Convert DNA/RNA and translate RNA to proteins. Learn genetic coding interactively.">
-        <meta name="twitter:image" content="https://dna.richardsblogs.com/favicon.ico">
-        <link rel="canonical" href="https://dna.richardsblogs.com">
-        <link rel="icon" type="image/x-icon" href="favicon.ico" aria-label="Nucleic Acid Favicon">
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>window.jQuery||document.write('<script src="jquery-3.7.1.js"><\/script>')</script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.min.css" integrity="sha512-TFee0335YRJoyiqz8hA8KV3P0tXa5CpRBSoM0Wnkn7JoJx1kaq1yXL/rb8YFpWXkMOjRcv5txv+C6UluttluCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.onerror=null;this.href='jquery-ui.min.css';"/>
@@ -33,223 +23,268 @@
                 font-weight: 1 1000;
                 font-style: normal;
             }
+            :root{
+                --dna-a: #FF6B6B;
+                --dna-t: #4ECDC4;
+                --dna-g: #FFD166;
+                --dna-c: #6A0572;
+                --rna-u: #1A936F;
+            }
             body{
-                font-family: "Noto Sans SC";
+                font-family: "Noto Sans SC", sans-serif;
                 margin: 0;
                 padding: 0;
                 background-color: #E4E4E4;
                 color: #000;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
             }
-            #main{
-                font-family: "Noto Sans SC";
-                margin: 0 auto;
-                background-color: #FFF;
-                padding: 1.57rem;
-                border-radius: .625rem;
-                box-shadow: 0 .25rem .5rem rgba(0, 0, 0, 0.1);
-                max-width: 100%;
-                min-height: 61.75vh;
+            header{
+                background: linear-gradient(30deg, #DE0000, #1C94E9);
+                color: #FFF;
+                text-align: center;
+                padding: 1.5rem 0;
             }
             h1{
-                font-family: "Noto Sans SC";
-                color: #FFF;
-                background: linear-gradient(30deg, #DE0000, #1C94E9);
-                font-size: 4rem;
+                font-size: clamp(2.5rem, 5vw, 4rem);
                 margin: 0;
-                text-align: center;
+                padding: .5rem 0;
+            }
+            #main{
+                background-color: #FFF;
+                margin: 2rem auto;
                 padding: 2rem;
+                border-radius: .625rem;
+                box-shadow: 0 .25rem .5rem rgba(0, 0, 0, .1);
+                max-width: 1200px;
+                width: 95%;
+                flex-grow: 1;
+            }
+            .card{
+                background: #FEFEFE;
+                border-radius: 8px;
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+                box-shadow: 0 2px 4px rgba(0,0,0,.05);
             }
             .form-group{
-                font-family: "Noto Sans SC";
-                margin-bottom: 1.25rem;
+                margin-bottom: 1.5rem;
             }
             label{
-                font-family: "Noto Sans SC";
                 display: block;
                 font-weight: bold;
                 margin-bottom: .5rem;
-                color: #000;
-            }
-            input, button{
-                font-family: "Noto Sans SC";
             }
             input[type="text"], select{
-                font-family: "Noto Sans SC";
                 width: 100%;
-                padding: .75rem;
+                padding: .8rem;
                 font-size: 1rem;
-                border: .063rem solid #CCC;
-                border-radius: .223rem;
-                box-sizing: border-box;
-                transition: border-color 0.3s;
+                border: 1px solid #CCC;
+                border-radius: 4px;
+                transition: border-color .3s;
             }
             input[type="text"]:focus, select:focus{
-                font-family: "Noto Sans SC";
                 border-color: #1A73E8;
                 outline: none;
+                box-shadow: 0 0 0 2px rgba(26, 115, 232, .2);
             }
-            .checkbox-group{
-                font-family: "Noto Sans SC";
+            .button-group{
                 display: flex;
-                align-items: center;
-                gap: .77rem;
+                flex-wrap: wrap;
+                gap: .5rem;
+                margin-top: 1rem;
             }
-            input[type="checkbox"]{
-                font-family: "Noto Sans SC";
-                width: auto;
+            .base-btn{
+                flex: 1 1 100px;
+                padding: .8rem;
+                background: #E3F2FD;
+                border: 1px solid #BBDEFB;
+                border-radius: 4px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all .2s;
             }
-            #result, #error{
-                font-family: "Noto Sans SC";
-                margin-top: 1.25rem;
-                font-size: 1.1rem;
-                line-height: 1.5;
+            .base-btn:hover{
+                background: #BBDEFB;
+                transform: translateY(-2px);
+            }
+            .action-btn{
+                padding: .8rem 1.2rem;
+                background: #E0E0E0;
+                border: 1px solid #CCC;
+                border-radius: 4px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+            .action-btn:disabled{
+                opacity: .6;
+                cursor: not-allowed;
+            }
+            #results-container{
+                margin-top: 2rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid #EEE;
             }
             #result{
-                font-family: "Noto Sans SC";
-                color: #000;
-                word-break: break-all;
+                font-family: "Noto Sans SC", sans-serif;
+                font-size: 1.2rem;
+                line-height: 1.8;
+                background: #F1F8FF;
+                padding: 1.5rem;
+                border-radius: 8px;
+                min-height: 150px;
             }
             #error{
-                font-family: "Noto Sans SC";
                 color: #DE0000;
+                padding: 1rem;
+                margin-top: 1rem;
+                border-radius: 4px;
+                background: #FFEBEE;
+                display: none;
+            }
+            .base-a{
+                color: var(--dna-a);
+                font-weight: bold;
+            }
+            .base-t{
+                color: var(--dna-t);
+                font-weight: bold;
+            }
+            .base-u{
+                color: var(--rna-u);
+                font-weight: bold;
+            }
+            .base-g{
+                color: var(--dna-g);
+                font-weight: bold;
+            }
+            .base-c{
+                color: var(--dna-c);
+                font-weight: bold;
             }
             table{
-                font-family: "Noto Sans SC";
                 width: 100%;
                 border-collapse: collapse;
-                margin-top: .625rem;
+                margin-top: 1rem;
             }
             th, td{
-                font-family: "Noto Sans SC";
-                border: .063rem solid #000;
-                padding: .5rem;
+                border: 1px solid #000;
+                padding: .75rem;
                 text-align: center;
             }
             th{
-                font-family: "Noto Sans SC";
                 background-color: #F0F0F0;
             }
             #footer{
                 text-align: center;
                 background-color: #28465C;
                 color: #FFF;
-                padding: .05rem;
+                padding: 1rem;
                 font-size: 1rem;
             }
-            @media (max-width: 600px){
+            .footer-controls{
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+                margin-top: .5rem;
+            }
+            .footer-btn{
+                padding: .5rem 1rem;
+                background: rgba(255,255,255,.2);
+                border: none;
+                border-radius: 4px;
+                color: #FFF;
+                cursor: pointer;
+            }
+            @media (max-width: 768px){
                 body{
-                    padding: .625rem;
+                    padding: .5rem;
                 }
                 #main{
-                    padding: .938rem;
+                    padding: 1rem;
+                }
+                .base-btn{
+                    flex: 1 1 70px;
+                    padding: .6rem;
+                    font-size: .9rem;
                 }
                 h1{
-                    font-size: 1.5rem;
-                }
-                input[type="text"], select{
-                    font-size: 0.9rem;
-                    padding: .625rem
-                }
-                label{
-                    font-size: 0.9rem;
-                }
-                .base-button{
-                    padding: 1.1rem 1.8rem;
-                    font-size: 1.3rem;
+                    font-size: 2rem;
                 }
             }
             .highlight-effect{
-                transition: all .3s ease;
-                box-shadow: 0 0 .625rem rgba(26, 113, 235, .5);
-            }
-            .result-fade{
-                display: none;
-            }
-            .error-shake{
-                animation: shake .5s;
+                box-shadow: 0 0 10px rgba(26, 113, 235, .5);
             }
             @keyframes shake{
                 0%{
                     transform: translateX(0);
                 }
                 25%{
-                    transform: translateX(-.625rem);
+                    transform: translateX(-8px);
                 }
                 50%{
                     transform: translateX(0);
                 }
                 75%{
-                    transform: translateX(.625rem);
+                    transform: translateX(8px);
                 }
                 100%{
                     transform: translateX(0);
                 }
             }
-            .sequence-container span{
-                display: inline-block;
-                min-width: 1ch;
-            }
-            a{
-                color: #FFF;
-            }
-            #base-buttons{
-                display: flex;
-                justify-content: flex-start;
-                flex-wrap: wrap;
-                margin-top: .8rem;
-            }
-            .base-button{
-                padding: .4rem 1.2rem;
-                margin: .4rem;
-                font-size: 1.1rem;
-                background-color: #F0F0F0;
-                border: .05rem solid #CCC;
-                cursor: pointer;
-                border-radius: 5px;
-                transition: all .3s ease;
-            }
-            .base-button:hover{
-                transform: scale(1.1);
-            }
-            #sequence-controls{
-                display: flex;
-                justify-content: flex-start;
-                margin-top: .8rem;
+            .error-shake{
+                animation: shake .5s;
             }
         </style>
     </head>
     <body>
-        <h1>Nucleic Acid Pairing and Protein Decoding</h1>
+        <header>
+            <h1>Nucleic Acid Pairing and Protein Decoding</h1>
+        </header>
         <main id="main">
-            <div class="form-group">
-                <label for="sequence">Input Sequence:</label>
-                <input type="text" id="sequence" placeholder="e.g., ATGC (DNA) or AUGC (RNA)">
-                <div id="base-buttons"></div>
-                <div id="sequence-controls">
-                    <button id="delete-last" class="base-button" disabled>Delete</button>
-                    <button id="clear-all" class="base-button" disabled>Clear All</button>
+            <div class="card">
+                <div class="form-group">
+                    <label for="sequence">Input Sequence:</label>
+                    <input type="text" id="sequence" placeholder="e.g., ATGC (DNA) or AUGC (RNA)">
+                    <div id="base-buttons" class="button-group"></div>
+                    <div id="sequence-controls" class="button-group">
+                        <button id="delete-last" class="action-btn" disabled>Delete Last</button>
+                        <button id="clear-all" class="action-btn" disabled>Clear All</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="conversionType">Conversion Type:</label>
+                    <select id="conversionType">
+                        <option value="DNA_COMPLEMENT">DNA to Complement DNA</option>
+                        <option value="DNA_TRANSCRIPT">DNA (coding) to RNA Transcript</option>
+                        <option value="RNA_COMPLEMENT">RNA to Complement RNA</option>
+                        <option value="RNA_PROTEIN">RNA to Protein</option>
+                        <option value="DNA_PROTEIN">DNA (coding) to Protein</option>
+                    </select>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="showBaseNames" checked>
+                    <label for="showBaseNames">Show Base Names</label>
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="colorizeSequence" checked>
+                    <label for="colorizeSequence">Colorize Sequence</label>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="conversionType">Conversion Type:</label>
-                <select id="conversionType">
-                    <option value="DNA_COMPLEMENT">DNA to Complement DNA</option>
-                    <option value="DNA_TRANSCRIPT">DNA (coding) to RNA Transcript</option>
-                    <option value="RNA_COMPLEMENT">RNA to Complement RNA</option>
-                    <option value="RNA_PROTEIN">RNA to Protein</option>
-                    <option value="DNA_PROTEIN">DNA (coding) to Protein</option>
-                </select>
+            <div id="results-container">
+                <div id="result"></div>
+                <div id="error"></div>
             </div>
-            <div class="form-group checkbox-group">
-                <input type="checkbox" id="showBaseNames" checked>
-                <label for="showBaseNames">Show Base Names</label>
-            </div>
-            <div id="result"></div>
-            <div id="error"></div>
         </main>
         <footer id="footer">
             <p>2025 Richard's Blogs</p>
             <p>Main site: <a href="https://www.richardsblogs.com" target="_blank">www.richardsblogs.com</a></p>
+            <div class="footer-controls">
+                <button id="copy-results" class="footer-btn">Copy Results</button>
+                <button id="reset-all" class="footer-btn">Reset All</button>
+            </div>
         </footer>
         <script src="script.js"></script>
     </body>
