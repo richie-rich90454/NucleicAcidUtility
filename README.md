@@ -71,7 +71,7 @@ NUCLEIC‑ACID‑PAIRING/
 ├── package.json                      # project metadata & dependencies
 ├── README.md                         # this file
 ├── favicon.ico                       # favicon & social preview image
-├── NotoSansSC‑VariableFont_wght.ttf  # embedded font
+├── NotoSans-VariableFont_wdth,wght.ttf  # embedded font
 ├── index.html                        # markup & inline styles
 ├── jquery-3.7.1.js                   # local fallback if CDN fails
 ├── jquery-ui.min.css                 # local fallback if CDN fails
