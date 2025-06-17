@@ -30,6 +30,9 @@
                 --dna-c: #6A0572;
                 --rna-u: #1A936F;
             }
+            *, *::before, *::after{
+                box-sizing: border-box;
+            }
             body{
                 font-family: "Noto Sans", sans-serif;
                 margin: 0;
@@ -57,7 +60,7 @@
                 padding: 1rem;
                 border-radius: .625rem;
                 box-shadow: 0 .25rem .5rem rgba(0, 0, 0, .1);
-                width: 100%;
+                width: 99%;
                 max-width: 100%;
                 flex-grow: 1;
             }
@@ -182,6 +185,7 @@
                 color: #FFF;
                 padding: 1rem;
                 font-size: 1rem;
+                width: 100%;
             }
             .footer-controls{
                 display: flex;
