@@ -201,6 +201,58 @@
                 color: #FFF;
                 cursor: pointer;
             }
+            #visualizer-container{
+                margin-top: 1.5rem;
+                padding: 1rem;
+                background: #F8F9FA;
+                border-radius: 8px;
+                border: 1px solid #E9ECEF;
+                overflow-x: auto;
+                display: none;
+            }
+            #visualizer-title{
+                font-weight: bold;
+                margin-bottom: .75rem;
+                color: #495057;
+            }
+            #sequence-visualizer{
+                display: block;
+                background: #FFF;
+                margin: 0 auto;
+            }
+            .strand-label{
+                font-size: .8rem;
+                fill: #6C757D;
+                text-anchor: middle;
+            }
+            .base-pair{
+                stroke: #CED4DA;
+                stroke-width: 1;
+            }
+            .amino-acid{
+                stroke: #343A40;
+                stroke-width: 1;
+                fill-opacity: .8;
+                cursor: pointer;
+            }
+            .amino-acid-label{
+                font-size: .7rem;
+                text-anchor: middle;
+                pointer-events: none;
+                fill: #212529;
+                font-weight: bold;
+            }
+            .amino-acid-tooltip{
+                position: absolute;
+                background: rgba(0, 0, 0, .8);
+                color: #FFF;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-size: .9rem;
+                pointer-events: none;
+                z-index: 100;
+                display: none;
+            }
             @media (max-width: 768px){
                 body{
                     padding: .5rem;
@@ -215,6 +267,10 @@
                 }
                 h1{
                     font-size: 1.5rem;
+                }
+                #sequence-visualizer{
+                    width: 100%;
+                    height: auto;
                 }
             }
             .highlight-effect{
@@ -277,7 +333,6 @@
                     <input type="checkbox" id="showBaseNames" checked>
                     <label for="showBaseNames">Show Base Names</label>
                 </div>
-                
                 <div class="form-group checkbox-group">
                     <input type="checkbox" id="colorizeSequence" checked>
                     <label for="colorizeSequence">Colorize Sequence</label>
@@ -286,6 +341,11 @@
             <div id="results-container">
                 <div id="result"></div>
                 <div id="error"></div>
+            </div>
+            <div id="visualizer-container">
+                <div id="visualizer-title">Structure Visualizer</div>
+                <canvas id="sequence-visualizer"></canvas>
+                <div class="amino-acid-tooltip"></div>
             </div>
         </main>
         <footer id="footer">
@@ -296,6 +356,6 @@
                 <button id="reset-all" class="footer-btn">Reset All</button>
             </div>
         </footer>
-        <script src="script.js"></script>
+        <script src="script.min.js"></script>
     </body>
 </html>
