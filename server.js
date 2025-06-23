@@ -1,31 +1,57 @@
-let fastify=require("fastify")({ 
-    logger: false,
+let fastify=require("fastify");
+let serverOptions={
+    logger:{
+        level: "error",
+        transport:{
+            target: "pino-pretty"
+        }
+    },
     ignoreTrailingSlash: true,
     caseSensitive: false
-});
-let PORT=6001;
-fastify.register(require("@fastify/static"),{
+};
+let app=fastify(serverOptions);
+let rateLimitPlugin=require("@fastify/rate-limit");
+let rateLimitOptions={
+    max: 50,
+    timeWindow: "1 minute"
+};
+app.register(rateLimitPlugin, rateLimitOptions);
+let staticPlugin=require("@fastify/static");
+let staticOptions={
     root: __dirname,
     prefix: "/",
-    setHeaders: (res)=>{
+    list: false,
+    setHeaders: function(res){
         res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         res.setHeader("Pragma", "no-cache");
     }
-});
-fastify.get("/", (_, reply)=>{
-    reply.sendFile("index.html");
-});
-fastify.listen({
-    port: PORT,
+};
+app.register(staticPlugin, staticOptions);
+function errorHandler(error, request, reply){
+    app.log.error(error);
+    let responsePayload={
+        error: "Internal Server Error"
+    };
+    reply.status(500).send(responsePayload);
+}
+app.setErrorHandler(errorHandler);
+function rootRouteHandler(request, reply){
+    let filePath="index.html";
+    reply.sendFile(filePath);
+}
+app.get("/", rootRouteHandler);
+let listenOptions={
+    port: 6001,
     host: "::",
-    backlog: 1024,
-    bodyLimit: 4096,
-    keepAliveTimeout: 5000,
-    connectionTimeout: 5000
-}, (err)=>{
-    if (err){
-        console.error(err);
+    backlog: 256
+};
+function listenCallback(startupError){
+    if (startupError){
+        app.log.error(startupError);
         process.exit(1);
     }
-    console.log(`Server running at http://localhost:${PORT}`);
-});
+    let serverAddress="http://localhost:6001";
+    let startupMessage="Server running at " + serverAddress;
+    console.log(startupMessage);
+}
+app.listen(listenOptions, listenCallback);
