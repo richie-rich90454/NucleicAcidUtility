@@ -318,18 +318,26 @@
             body.dark #visualizer-container{
                 color: #000;
             }
-            #titlebar{
-                user-select: none;
+            #window-title{
+                font-size: .95rem;
+                font-weight: 500;
+                padding-left: 12px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-weight: bold;
             }
             #window-controls button{
                 transition: background-color .1s ease;
             }
             #titlebar{
-                -webkit-app-region: drag;
-                height: 38px;
-                background: #F5F5F7;
+                user-select: none;
                 display: flex;
                 align-items: center;
+                justify-content: space-between;
+                padding: 0;
+                height: 38px;
+                background: #F5F5F7;
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -337,10 +345,9 @@
                 z-index: 1000;
                 font-family: "Noto Sans", sans-serif;
                 border-bottom: 1px solid #E0E0E0;
-                user-select: none;
-                padding-left: 0;
                 border-radius: 12px 12px 0 0;
-                justify-content: flex-end;
+                -webkit-app-region: drag;
+                user-select: none;
             }
             #window-controls{
                 display: flex;
@@ -421,6 +428,7 @@
     </head>
     <body>
         <!-- <div id="titlebar">
+            <div id="window-title">Nucleic Acid Utility</div>
             <div id="window-controls">
                 <button id="minimize-button" title="Minimize">
                     <svg width="10" height="10" viewBox="0 0 12 12">

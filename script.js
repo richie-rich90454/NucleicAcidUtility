@@ -527,7 +527,7 @@ document.addEventListener("DOMContentLoaded", function (){
         $sequenceInput.focus();
     }
 });
-//Only used for electron app building, uncomment it if you need it
+// Only used for electron app building, uncomment it if you need it
 // document.addEventListener("DOMContentLoaded", function(){
 //     let minimizeButton=document.getElementById("minimize-button");
 //     let maximizeButton=document.getElementById("maximize-button");
