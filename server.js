@@ -27,10 +27,10 @@ let rateLimitOptions={
         return request.url=="/rate-limit-exceeded";
     },
     addHeaders:{
-        "x-ratelimit-limit": false,
-        "x-ratelimit-remaining": false,
-        "x-ratelimit-reset": false,
-        "retry-after": false
+        'x-ratelimit-limit': false,
+        'x-ratelimit-remaining': false,
+        'x-ratelimit-reset': false,
+        'retry-after': false
     },
     onExceeding: function(request){
         app.log.info("Rate limit nearly exceeded for "+request.ip);
@@ -52,18 +52,17 @@ let staticOptions={
 };
 app.register(staticPlugin, staticOptions);
 function rateLimitScreenHandler(request, reply){
-    let filePath="rate_limit.html";
-    reply.sendFile(filePath);
+    reply.header("Content-Type", "text/html");
+    reply.header("Cache-Control", "no-store, max-age=0");
+    reply.sendFile("rate_limit.html");
 }
 app.get("/rate-limit-exceeded", rateLimitScreenHandler);
 function errorHandler(error, request, reply){
-    if (error.statusCode!==302){
-        app.log.error(error);
-    }
     if (error.statusCode==429){
         reply.redirect("/rate-limit-exceeded");
-    }
-    else{
+    } 
+    else if (error.statusCode!==302){
+        app.log.error(error);
         let responsePayload={
             error: "Internal Server Error"
         };
