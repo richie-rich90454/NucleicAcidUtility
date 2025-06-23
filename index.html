@@ -302,9 +302,143 @@
             input, button, select{
                 font-family: "Noto Sans", sans-serif;
             }
+            /* body.dark{
+                background-color: #000;
+                color: #FFF;
+            }
+            body.dark #main{
+                background-color: #000;
+            }
+            body.dark .card{
+                background: #000;
+            }
+            body.dark #results-container{
+                color: #000;
+            }
+            body.dark #visualizer-container{
+                color: #000;
+            }
+            #titlebar{
+                user-select: none;
+            }
+            #window-controls button{
+                transition: background-color .1s ease;
+            }
+            #titlebar{
+                -webkit-app-region: drag;
+                height: 38px;
+                background: #F5F5F7;
+                display: flex;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                font-family: "Noto Sans", sans-serif;
+                border-bottom: 1px solid #E0E0E0;
+                user-select: none;
+                padding-left: 0;
+                border-radius: 12px 12px 0 0;
+                justify-content: flex-end;
+            }
+            #window-controls{
+                display: flex;
+                gap: 8px;
+                -webkit-app-region: no-drag;
+                padding-right: 12px;
+            }
+            #window-controls button{
+                width: 28px;
+                height: 28px;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                transition: all 0.2s ease;
+            }
+            #window-controls button svg{
+                stroke: #000000;
+                fill: none;
+                stroke-width: 2px;
+                opacity: 0.8;
+                transition: opacity 0.2s ease;
+            }
+            #minimize-button:hover{
+                background: #FFBD44;
+            }
+            #minimize-button:hover svg{
+                opacity: 1;
+            }
+            #maximize-button:hover{
+                background: #00CC4F;
+            }
+            #maximize-button:hover svg{
+                opacity: 1;
+            }
+            #close-button:hover{
+                background: #FF5F57;
+            }
+            #close-button:hover svg{
+                opacity: 1;
+            }
+            #window-controls button:active{
+                opacity: 0.7;
+            }
+            #maximize-button.maximized svg{
+                display: none;
+            }
+            #maximize-button.maximized::after{
+                content: "";
+                display: block;
+                width: 12px;
+                height: 12px;
+                background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1.5 3.5h2v-2h7v7h-2v2h-7z' stroke='%23000' fill='none' stroke-width='1.2'/%3E%3C/svg%3E") no-repeat center;
+            }
+            body.dark #titlebar{
+                background: #2D2D30;
+                border-bottom: 1px solid #444444;
+            }
+            body.dark #window-controls button svg{
+                stroke: #FFFFFF;
+            }
+            body.dark #maximize-button.maximized::after{
+                background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1.5 3.5h2v-2h7v7h-2v2h-7z' stroke='%23fff' fill='none' stroke-width='1.2'/%3E%3C/svg%3E") no-repeat center;
+            }
+            body{
+                padding-top: 38px;
+                background: #F8F8F8;
+                overflow: overlay;
+            }
+            ::-webkit-scrollbar{
+                width: 0px;
+                background-color: transparent;
+            } */
         </style>
     </head>
     <body>
+        <!-- <div id="titlebar">
+            <div id="window-controls">
+                <button id="minimize-button" title="Minimize">
+                    <svg width="10" height="10" viewBox="0 0 12 12">
+                        <line x1="2" y1="6" x2="10" y2="6" stroke="inherit"/>
+                    </svg>
+                </button>
+                <button id="maximize-button" title="Maximize">
+                    <svg width="10" height="10" viewBox="0 0 12 12">
+                        <rect x="2" y="2" width="8" height="8" stroke="inherit" fill="none"/>
+                    </svg>
+                </button>
+                <button id="close-button" title="Close">
+                    <svg width="10" height="10" viewBox="0 0 12 12">
+                        <path d="M2 2L10 10M2 10L10 2" stroke="inherit"/>
+                    </svg>
+                </button>
+            </div>
+        </div> -->
         <header>
             <h1>Nucleic Acid Pairing and Protein Decoding</h1>
         </header>
@@ -338,14 +472,16 @@
                     <label for="colorizeSequence">Colorize Sequence</label>
                 </div>
             </div>
-            <div id="results-container">
-                <div id="result"></div>
-                <div id="error"></div>
-            </div>
-            <div id="visualizer-container">
-                <div id="visualizer-title">Structure Visualizer</div>
-                <canvas id="sequence-visualizer"></canvas>
-                <div class="amino-acid-tooltip"></div>
+            <div id="results">
+                <div id="results-container">
+                    <div id="result"></div>
+                    <div id="error"></div>
+                </div>
+                <div id="visualizer-container">
+                    <div id="visualizer-title">Structure Visualizer</div>
+                    <canvas id="sequence-visualizer"></canvas>
+                    <div class="amino-acid-tooltip"></div>
+                </div>
             </div>
         </main>
         <footer id="footer">
