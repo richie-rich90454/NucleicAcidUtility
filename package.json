@@ -1,5 +1,5 @@
 {
-  "name": "nucleic-acid-pairing",
+  "name": "nucleic-acid-utility",
   "version": "1.1.0",
   "description": "A small web application to pair DNA and RNA bases for the subject of biology.",
   "main": "main.js",
