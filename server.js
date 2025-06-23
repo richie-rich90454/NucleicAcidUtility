@@ -13,7 +13,31 @@ let app=fastify(serverOptions);
 let rateLimitPlugin=require("@fastify/rate-limit");
 let rateLimitOptions={
     max: 50,
-    timeWindow: "1 minute"
+    timeWindow: "1 minute",
+    errorResponseBuilder: function(request, context){
+        return{
+            statusCode: 302,
+            headers:{
+                "Location": "/rate-limit-exceeded",
+                "Cache-Control": "no-store"
+            }
+        };
+    },
+    skip: function(request, reply){
+        return request.url=="/rate-limit-exceeded";
+    },
+    addHeaders:{
+        "x-ratelimit-limit": false,
+        "x-ratelimit-remaining": false,
+        "x-ratelimit-reset": false,
+        "retry-after": false
+    },
+    onExceeding: function(request){
+        app.log.info("Rate limit nearly exceeded for "+request.ip);
+    },
+    onExceeded: function(request){
+        app.log.warn("Rate limit exceeded for "+request.ip);
+    }
 };
 app.register(rateLimitPlugin, rateLimitOptions);
 let staticPlugin=require("@fastify/static");
@@ -27,12 +51,24 @@ let staticOptions={
     }
 };
 app.register(staticPlugin, staticOptions);
+function rateLimitScreenHandler(request, reply){
+    let filePath="rate_limit.html";
+    reply.sendFile(filePath);
+}
+app.get("/rate-limit-exceeded", rateLimitScreenHandler);
 function errorHandler(error, request, reply){
-    app.log.error(error);
-    let responsePayload={
-        error: "Internal Server Error"
-    };
-    reply.status(500).send(responsePayload);
+    if (error.statusCode!==302){
+        app.log.error(error);
+    }
+    if (error.statusCode==429){
+        reply.redirect("/rate-limit-exceeded");
+    }
+    else{
+        let responsePayload={
+            error: "Internal Server Error"
+        };
+        reply.status(500).send(responsePayload);
+    }
 }
 app.setErrorHandler(errorHandler);
 function rootRouteHandler(request, reply){
@@ -51,7 +87,7 @@ function listenCallback(startupError){
         process.exit(1);
     }
     let serverAddress="http://localhost:6001";
-    let startupMessage="Server running at " + serverAddress;
+    let startupMessage="Server running at "+serverAddress;
     console.log(startupMessage);
 }
 app.listen(listenOptions, listenCallback);
