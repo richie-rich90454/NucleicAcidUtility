@@ -320,8 +320,8 @@ document.addEventListener("DOMContentLoaded", function (){
         }
         html+="</p>";
         if (showBaseNames){
-            html+="<p><strong>Input Bases:</strong> "+getBaseNames(sequence)+"</p>";
-            html+="<p><strong>Output Bases:</strong> "+getBaseNames(outputSequence)+"</p>";
+            html+="<p><strong> Input Bases:</strong> "+getBaseNames(sequence)+"</p>";
+            html+="<p><strong> Output Bases:</strong> "+getBaseNames(outputSequence)+"</p>";
         }
         $result.html(html);
     }
@@ -527,33 +527,3 @@ document.addEventListener("DOMContentLoaded", function (){
         $sequenceInput.focus();
     }
 });
-// Only used for electron app building, uncomment it if you need it
-// document.addEventListener("DOMContentLoaded", function(){
-//     let minimizeButton=document.getElementById("minimize-button");
-//     let maximizeButton=document.getElementById("maximize-button");
-//     let closeButton=document.getElementById("close-button");
-//     minimizeButton.addEventListener("click", function(){
-//         window.electronAPI.minimizeWindow();
-//     });
-//     maximizeButton.addEventListener("click", function(){
-//         window.electronAPI.toggleMaximizeWindow();
-//     });
-//     closeButton.addEventListener("click", function(){
-//         window.electronAPI.closeWindow();
-//     });
-//     function updateMaximizeButton(){
-//         if (maximizeButton.classList.contains("maximized")){
-//             maximizeButton.classList.add("maximized");
-//         }
-//         else{
-//             maximizeButton.classList.remove("maximized");
-//         }
-//     }
-//     window.electronAPI.onMaximize(function(){
-//         maximizeButton.classList.add("maximized");
-//     });
-//     window.electronAPI.onUnmaximize(function(){
-//         maximizeButton.classList.remove("maximized");
-//     });
-//     updateMaximizeButton();
-// });
