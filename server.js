@@ -1,6 +1,6 @@
 let path=require("path");
 let fastify=require("fastify")({logger: false});
-let PORT=1331;
+let PORT=6001;
 let publicDir=path.join(__dirname, "public");
 fastify.register(require("@fastify/static"),{
     root: publicDir,
