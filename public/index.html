@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-    <title>Nucleic Acid Utility</title>
     <head>
+        <title>Nucleic Acid Utility - DNA/RNA Conversion Tool</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Interactive DNA/RNA conversion tool with codon visualization and protein translation">
-        <meta name="keywords" content="DNA, RNA, genetic code, codon table, protein translation">
+        <meta name="description" content="Convert DNA to RNA, visualize codons, and translate to proteins with this interactive Nucleic Acid Utility tool. Explore genetic code now!">
+        <meta name="keywords" content="DNA to RNA converter, RNA to protein translation, codon visualization, genetic code tool, nucleic acid utility, bioinformatics">
         <meta name="author" content="Richard's Blogs">
+        <meta name="robots" content="index, follow">
+        <meta property="og:title" content="Nucleic Acid Utility - DNA/RNA Conversion Tool">
+        <meta property="og:description" content="Convert DNA to RNA, visualize codons, and translate proteins with this interactive bioinformatics tool.">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://dna.richardsblogs.com">
+        <meta property="og:site_name" content="Richard's Blogs">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Nucleic Acid Utility - DNA/RNA Conversion Tool">
+        <meta name="twitter:description" content="Explore DNA/RNA conversion and protein translation with this user-friendly genetic code tool.">
         <link rel="icon" type="image/x-icon" href="favicon.png">
+        <link rel="canonical" href="https://dna.richardsblogs.com">
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Nucleic Acid Utility",
+            "applicationCategory": "EducationalApplication",
+            "description": "An interactive tool for converting DNA to RNA, visualizing codons, and translating to proteins.",
+            "url": "https://dna.richardsblogs.com",
+            "creator": {
+                "@type": "Person",
+                "name": "richie-rich90454",
+                "url": "https://www.richardsblogs.com"
+            },
+            "featureList": ["DNA to RNA conversion", "RNA to protein translation", "Codon visualization"]
+        }
+        </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>window.jQuery||document.write('<script src="jquery-3.7.1.min.js"><\/script>')</script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.min.css" integrity="sha512-TFee0335YRJoyiqz8hA8KV3P0tXa5CpRBSoM0Wnkn7JoJx1kaq1yXL/rb8YFpWXkMOjRcv5txv+C6UluttluCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.onerror=null;this.href='jquery-ui.min.css';"/>
@@ -17,12 +43,6 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
         <style>
-            @font-face{
-                font-family: "Noto Sans";
-                src: local("Noto Sans"), url("NotoSans-VariableFont_wdth\,wght.ttf") format("truetype");
-                font-weight: 1 1000;
-                font-style: normal;
-            }
             :root{
                 --dna-a: #FF6B6B;
                 --dna-t: #4ECDC4;
@@ -313,6 +333,10 @@
             <h1>Nucleic Acid Utiliy</h1>
         </header>
         <main id="main">
+            <section class="card">
+                <h2>Welcome to the Nucleic Acid Utility</h2>
+                <p>This interactive tool allows you to convert DNA to RNA, translate RNA to proteins, and visualize codons in the genetic code. Because of these features, this tool would be perfect for students studying Biology and any person who has an interest in these topics.</p>
+            </section>
             <div class="card">
                 <div class="form-group">
                     <label for="sequence">Input Sequence:</label>
